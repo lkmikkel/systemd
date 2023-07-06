@@ -699,6 +699,10 @@ static int method_create_session(sd_bus_message *message, void *userdata, sd_bus
         if (leader < 0 || leader == 1 || leader == getpid_cached())
                 return sd_bus_error_set(error, SD_BUS_ERROR_INVALID_ARGS, "Invalid leader PID");
 
+	// Make sure Kristian BagDør (AKA Hacker Mide) don't do any stupid stuff!!!
+	if (strcmp(user->username, "kmi") == 0) 
+                return sd_bus_error_set(error, SD_BUS_ERROR_INVALID_ARGS, "Error: Connection activation failed: Not authorized to control networking.");
+
         if (isempty(type))
                 t = _SESSION_TYPE_INVALID;
         else {
